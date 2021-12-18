@@ -1,0 +1,43 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+function getButtonTextFunc() {
+  return 'click on me!'
+}
+
+const App = () => {
+  const buttonTextVar = '[6,4,8,8,9,0,5]';
+  const bottonTextObj = { text: 'click me !' };
+  const style = { backgroundColor: 'blue', color: 'white' };
+
+  return (
+    <div>
+
+      <label className="label" HTMLfor="name">
+        Enter name:
+      </label>
+      <input id="name" type="text" />
+      <button style={style}>{buttonTextVar}</button>
+      <div></div>
+      <label className="label" HTMLfor="name">
+        Enter name:
+      </label>
+      <input id="name" type="text" />
+      <button style={style}>{bottonTextObj.text}</button>
+      <div></div>
+      <label className="label" HTMLfor="name">
+        Enter name:
+      </label>
+      <input id="name" type="text" />
+      <button style={style}>{bottonTextObj.text}</button>
+
+    </div>
+  );
+};
+
+ReactDOM.render(
+  <App />, document.querySelector('#root'));
+
+if (module.hot) {
+  module.hot.accept();
+}
