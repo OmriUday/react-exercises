@@ -1,37 +1,58 @@
-import React from "react";
+import React, { Component } from 'react';
+import './app.css';
+import axios from 'axios';
 
-class App extends React.Component {
+class App extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      display: 'block',
-      height: '90vh',
-      width: '80vw',
-      backgroundColor: 'yellow'
+      posts: []
     };
-    this.displayHandler = this.displayHandler.bind(this);
-    console.log("this is the first time !");
+  }
+  componentDidMount() {
+    axios.get('https://randomuser.me/api/?results=100')
+      .then(response => {
+        console.log(response.data.results);
+        this.setState({
+          posts: response.data.results
+        });
+      });
   }
 
-  displayHandler() {
-    let res = this.state.display === 'block' ? 'none' : 'block';
-    this.setState({
-      display: res,
-      height: '90vh',
-      width: '80vw',
-      backgroundColor: 'yellow'
-    });
-    console.log(this.state.display);
-  }
+  render() {
+    const { posts } = this.state;
+    const postList = posts.length ? (
+      posts.map(post => {
+        console.log(post.name.first);
 
-  render = () => {
+        return (
+          <div className='card' key={post.login.uuid}>
+            <div>
+              <img className='image' alt={post.login.username} src={post.picture.large} />
+            </div>
+            <h3>{post.name.title}, {post.name.first} {post.name.last}</h3>
+            <h5>Gender: {post.gender}</h5>
+            <h5>Age: {post.dob.age}</h5>
+            <h5>City :{post.location.city}</h5>
+            <h5>Street :{post.location.street.name}</h5>
+            <h5>Phone :{post.phone}</h5>
+          </div>
+        )
+      })
+    ) : (
+      <div className="center">No posts yet</div>
+    )
     return (
-      <div style={{ paddingLeft: '10%',  textAlign: 'center', alignItems: 'center' }}>
-        <button onClick={this.displayHandler}>show/hide</button> <br />
-        <div style={this.state}></div>
+      <div wrapper>
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname"></input>
+        <div className='container'>
+          {postList}
+        </div>
       </div>
+
     );
-  };
+  }
 }
 
 export default App;
